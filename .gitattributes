@@ -1,8 +1,6 @@
 # Default rule
 * text=auto
-
 # >  Text formats  <
-
 # Unity Assets
 *.anim text
 *.asset text
@@ -20,13 +18,11 @@
 *.renderTexture text
 *.shader text
 *.unity text
-
 # Scripts
 *.cs text diff=csharp
 *.js text
 *.sh text
 *.command text
-
 # Misc
 *.md text
 *.txt text
@@ -36,13 +32,10 @@
 *.html text diff=html
 *.json text
 *.asmdef text
-
 # >  Binary formats  <
-
 # Unity
 LightingData.asset binary
 LightmapSnapshot.asset binary
-
 # Images
 *.bmp binary
 *.jpg binary
@@ -51,16 +44,13 @@ LightmapSnapshot.asset binary
 *.tif binary
 *.psd binary
 *.exr binary
-
 # Meshes
-*.3ds binary
-*.fbx binary
-*.FBX binary
-*.obj binary
-
+*.3ds filter=lfs diff=lfs merge=lfs -binary
+*.fbx filter=lfs diff=lfs merge=lfs -binary
+*.obj filter=lfs diff=lfs merge=lfs -binary
 # Audio
 *.mp3 binary
 *.wav binary
-
 # Misc
 *.dll binary
+*.blend filter=lfs diff=lfs merge=lfs -binary
