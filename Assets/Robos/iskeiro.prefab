@@ -3689,7 +3689,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1501853210479640}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 173.1, y: 2.66, z: 52.4}
+  m_LocalPosition: {x: 173.3, y: 1.4, z: 53.9}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 4806857496460558}
@@ -10645,14 +10645,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3799bf7a3d1eb634983efcd8b9d6b1ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MotorForce: 10000
-  SteerForce: 65
-  BrakeForce: 80000
-  SpinFactor: 0.6
-  Left_Wheel: {fileID: 146035400082561194}
-  Right_Wheel: {fileID: 146992780208641292}
-  F_Left_Wheel: {fileID: 146747974303659862}
-  F_Right_Wheel: {fileID: 146659910747762508}
+  motorForce: 5000
+  brakeForce: 50000
+  spinFactor: 1
+  leftWheel: {fileID: 146747974303659862}
+  rightWheel: {fileID: 146659910747762508}
+  leftWheelFront: {fileID: 146035400082561194}
+  rightWheelFront: {fileID: 146992780208641292}
+  playerNumber: 1
 --- !u!146 &146035400082561194
 WheelCollider:
   m_ObjectHideFlags: 1

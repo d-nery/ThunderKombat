@@ -2617,8 +2617,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1741418144401942}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 175.36452, y: 5.73, z: -41.447166}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalPosition: {x: 175.4, y: 7.6, z: -56.8}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_Children:
   - {fileID: 4554700508302540}
   - {fileID: 4504600831764826}
@@ -6443,7 +6443,7 @@ HingeJoint:
   m_Anchor: {x: 1, y: -10.03, z: -0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -3.9314575, y: 4.6307974, z: -5.521927}
+  m_ConnectedAnchor: {x: -3.931452, y: 4.6307964, z: -5.5219264}
   m_UseSpring: 0
   m_Spring:
     spring: 0
@@ -6543,14 +6543,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3799bf7a3d1eb634983efcd8b9d6b1ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MotorForce: 5000
-  SteerForce: 65
-  BrakeForce: 50000
-  SpinFactor: 0.6
-  Left_Wheel: {fileID: 146525810669457030}
-  Right_Wheel: {fileID: 146862967541770760}
-  F_Left_Wheel: {fileID: 146243011807909344}
-  F_Right_Wheel: {fileID: 146626380132718872}
+  motorForce: 5000
+  brakeForce: 50000
+  spinFactor: 0.6
+  leftWheel: {fileID: 146525810669457030}
+  rightWheel: {fileID: 146862967541770760}
+  leftWheelFront: {fileID: 146243011807909344}
+  rightWheelFront: {fileID: 146626380132718872}
+  playerNumber: 2
 --- !u!146 &146243011807909344
 WheelCollider:
   m_ObjectHideFlags: 1
