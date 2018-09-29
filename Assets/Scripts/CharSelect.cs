@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class CharSelect : MonoBehaviour {
     void FixedUpdate () {
-        if (Input.GetAxis("Cancel") > 0) {
+        if (Input.GetAxis("P1B") > 0) {
             SceneManager.LoadScene(0);
         }
     }

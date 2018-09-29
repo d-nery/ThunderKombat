@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class LoadScene : MonoBehaviour {
     void Update() {
-        if (Input.GetAxis("Cancel") == 0 && Input.anyKey) {
+        if (Input.GetAxis("P1B") == 0 && Input.anyKey) {
             SceneManager.LoadScene(1);
         }
     }

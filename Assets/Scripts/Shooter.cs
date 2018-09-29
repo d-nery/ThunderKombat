@@ -15,7 +15,7 @@ public class Shooter : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        if (Input.GetAxis("Fire2") > 0) {
+        if (Input.GetAxis("P1B") > 0) {
             ShootBullet();
         }
     }
