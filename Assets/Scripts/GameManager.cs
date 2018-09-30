@@ -38,8 +38,8 @@ public class GameManager : MonoBehaviour {
         robotController = GetComponent<RobotController>();
 
     }
-	
-	// Update is called once per frame
+
+    // Update is called once per frame
 
     void ResetGame(bool IskeiroVictory, bool DarcVictory)
     {
@@ -48,18 +48,14 @@ public class GameManager : MonoBehaviour {
         if (DarcVictory)
             DarcWins++;
 
-        
+
         IskeiroHealth.currentHealth = 100;
         DarcHealth.currentHealth = 1000;
         GameTimer.finished = true;
         robotController.ResetTransform();
-
-
-
     }
-	void Update () {
 
-
+    void Update () {
         if (IskeiroWins == 0 && DarcWins == 0) // Primeira vitoria de cada um
         {
             if (GameTimer.finished)
@@ -115,7 +111,7 @@ public class GameManager : MonoBehaviour {
                 }
                 else if (10 * IskeiroHealth.currentHealth < DarcHealth.currentHealth)
                 {
-                    ResetGame(false, true);     
+                    ResetGame(false, true);
                     audioImpressive.Play();
                     WinnerName.text = "Iskeiro  K.O";
 

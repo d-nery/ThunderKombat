@@ -10,8 +10,6 @@ public class WeaponController : MonoBehaviour {
 
     private RobotBattery battery;
 
-    public int weaponPowerConsumption = 3;
-
     // Use this for initialization
     void Start () {
         weapon = GetComponent<HingeJoint>();
@@ -20,14 +18,15 @@ public class WeaponController : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update () {
+    void FixedUpdate () {
         JointMotor motor = weapon.motor;
 
-        if (Input.GetAxis("P2B") > 0) {
-            motor.targetVelocity = -1200;
-            battery.IncreasePowerConsumption(weaponPowerConsumption);
+        if (!battery.Empty() && Input.GetAxis("P2B") > 0) {
+            motor.targetVelocity = -1759;
+            battery.WeaponOn(true);
         } else {
             motor.targetVelocity = 0;
+            battery.WeaponOn(false);
         }
 
         weapon.motor = motor;

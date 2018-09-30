@@ -6,35 +6,51 @@ public class RobotBattery : MonoBehaviour
 {
     public int startingCharge = 1000;
     private int currentCharge;
-	public float dischargeRate = 1f;
-	private int powerConsumption = 0;
-	private float startTime1;
-	private float startTime2;
+    public float dischargeRate = 1f;
+    private int powerConsumption = 0;
     public Slider batterySlider;
 
+    public int baseConsumption = 1;
+    public int driveConsumption = 1;
+    public int bulletConsumption = 1;
+    public int weaponConsumption = 1;
+
+    private bool driving = false;
+    private bool shooting = false;
+    private bool weaponOn = false;
+
     void Start () {
-		startTime1 = Time.fixedTime;
-		startTime2 = Time.fixedTime;
         currentCharge = startingCharge;
+        InvokeRepeating("Discharge", 0, dischargeRate);
     }
 
-	void FixedUpdate() {
-		if (Time.fixedTime - startTime1 >= dischargeRate * Time.timeScale) {
-			Discharge(powerConsumption);
-			powerConsumption = 1;
-			startTime1 = Time.fixedTime;
-		}
-	}
+    void Discharge() {
+        if (Empty())
+            return;
 
-	void Discharge(int amount) {
-		currentCharge -= amount;
-		batterySlider.value = currentCharge;
-	}
+        int amount = 0;
+        amount += baseConsumption;
+        amount += driving ? driveConsumption : 0;
+        amount += shooting ? bulletConsumption : 0;
+        amount += weaponOn ? weaponConsumption : 0;
 
-	public void IncreasePowerConsumption(int amount) {
-		if (Time.fixedTime - startTime2 >= dischargeRate * Time.timeScale / 10) {
-			powerConsumption += amount;
-			startTime2 = Time.fixedTime;
-		}
-	}
+        currentCharge -= amount;
+        batterySlider.value = currentCharge;
+    }
+
+    public void Shooting(bool isShooting) {
+        shooting = isShooting;
+    }
+
+    public void Driving(bool isDriving) {
+        driving = isDriving;
+    }
+
+    public void WeaponOn(bool isWeaponOn) {
+        weaponOn = isWeaponOn;
+    }
+
+    public bool Empty() {
+        return (currentCharge <= 0);
+    }
 }
