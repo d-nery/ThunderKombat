@@ -55,13 +55,17 @@ public class RobotController : MonoBehaviour {
         float v = Input.GetAxis("P" + playerNumber + "Yaxis") * motorForce;
         float h = Input.GetAxis("P" + playerNumber + "Xaxis") * motorForce;
 
+        if (Input.GetKeyDown("joystick " + playerNumber + " button 2")) {
+            flip.Pressing(true);
+        } else {
+            flip.Pressing(false);
+        }
+        if (flip.Full()) {
+            flip.Reset();
+            ResetPos();
+        }
+
         if (Vector3.Dot(transform.up, Vector3.down) > 0) {
-            if (Input.GetAxis("P" + playerNumber + "X")) {
-                flip.Pressing(true);
-            }
-            if (flip.Done()) {
-                ResetTransform();
-            }
         } else {
             resetting = false;
             seconds = Time.fixedTime;

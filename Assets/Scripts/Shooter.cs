@@ -18,7 +18,7 @@ public class Shooter : MonoBehaviour {
     }
 
     void FixedUpdate () {
-        if (Time.fixedTime - seconds >= 0.7) {
+        if (Time.fixedTime - seconds >= 0.1) {
             if (!battery.Empty() && Input.GetAxis("P1B") > 0) {
                 ShootBullet();
                 battery.Shooting(true);
@@ -36,6 +36,6 @@ public class Shooter : MonoBehaviour {
 
         Rigidbody projectile = tmpObj.GetComponent<Rigidbody>();
 
-        projectile.velocity = -(shootingTip.transform.forward * shootSpeed);
+        projectile.velocity = -(shootingTip.transform.forward * shootSpeed) + Vector3.down * 2;
     }
 }
