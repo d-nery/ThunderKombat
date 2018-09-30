@@ -9,6 +9,8 @@ public class RobotController : MonoBehaviour {
     public int playerNumber = 1;
 
     private RobotBattery battery;
+
+    private RobotReset flip;
     private float seconds = 0;
     private bool resetting = false;
 
@@ -21,6 +23,7 @@ public class RobotController : MonoBehaviour {
         seconds = 0;
         resetting = false;
         battery = GetComponent<RobotBattery>();
+        flip = GetComponent<RobotReset>();
         InvokeRepeating("Blink", 0, 0.5f);
         initialPosition = gameObject.transform.position;
         initialRotation = gameObject.transform.rotation;
@@ -46,7 +49,12 @@ public class RobotController : MonoBehaviour {
         float h = Input.GetAxis("P" + playerNumber + "Xaxis") * motorForce;
 
         if (Vector3.Dot(transform.up, Vector3.down) > 0) {
-            ResetTransform();
+            if (Input.GetAxis("P" + playerNumber + "X")) {
+                flip.Pressing(true);
+            }
+            if (flip.Done()) {
+                ResetTransform();
+            }
         } else {
             resetting = false;
             seconds = Time.fixedTime;
