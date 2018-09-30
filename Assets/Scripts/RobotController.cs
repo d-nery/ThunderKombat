@@ -24,9 +24,10 @@ public class RobotController : MonoBehaviour {
         float h = Input.GetAxis("P" + playerNumber + "Xaxis") * motorForce;
 
         if (Vector3.Dot(transform.up, Vector3.down) > 0) {
-            if (Time.fixedTime - seconds >= 8) {
+            if (Time.fixedTime - seconds >= 7) {
                 shouldBlink = false;
                 gameObject.transform.Rotate(180, 0, 0);
+                gameObject.transform.position = new Vector3(180.0f, 5f, 0f);
             } else if (Time.fixedTime - seconds >= 4.5) {
                 shouldBlink = true;
             }

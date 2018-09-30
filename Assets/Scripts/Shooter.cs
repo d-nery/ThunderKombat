@@ -7,16 +7,20 @@ public class Shooter : MonoBehaviour {
     public GameObject bulletPrefab;
     public GameObject shootingTip;
     public float shootSpeed = 300;
+    public float seconds = 0;
 
     // Use this for initialization
     void Start () {
-
+        seconds = 0;
     }
 
     // Update is called once per frame
     void Update () {
-        if (Input.GetAxis("P1B") > 0) {
-            ShootBullet();
+        if (Time.fixedTime - seconds >= 0.7) {
+            if (Input.GetAxis("P1B") > 0) {
+                ShootBullet();
+            }
+            seconds = Time.fixedTime;
         }
     }
 
