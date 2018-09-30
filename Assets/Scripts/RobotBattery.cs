@@ -8,19 +8,21 @@ public class RobotBattery : MonoBehaviour
     private int currentCharge;
 	public float dischargeRate = 1f;
 	private int powerConsumption = 0;
-	private float startTime;
+	private float startTime1;
+	private float startTime2;
     public Slider batterySlider;
 
     void Start () {
-		startTime = Time.fixedTime;
+		startTime1 = Time.fixedTime;
+		startTime2 = Time.fixedTime;
         currentCharge = startingCharge;
     }
 
 	void FixedUpdate() {
-		if (Time.fixedTime - startTime >= dischargeRate * Time.timeScale) {
+		if (Time.fixedTime - startTime1 >= dischargeRate * Time.timeScale) {
 			Discharge(powerConsumption);
 			powerConsumption = 1;
-			startTime = Time.fixedTime;
+			startTime1 = Time.fixedTime;
 		}
 	}
 
@@ -30,6 +32,9 @@ public class RobotBattery : MonoBehaviour
 	}
 
 	public void IncreasePowerConsumption(int amount) {
-		powerConsumption += amount;
+		if (Time.fixedTime - startTime2 >= dischargeRate * Time.timeScale / 10) {
+			powerConsumption += amount;
+			startTime2 = Time.fixedTime;
+		}
 	}
 }

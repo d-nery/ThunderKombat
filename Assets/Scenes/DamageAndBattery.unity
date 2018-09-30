@@ -3134,7 +3134,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timerText: {fileID: 1889112978}
+  finished: 0
   maxTime: 60
+  audioData: {fileID: 0}
 --- !u!114 &20077874
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3412,6 +3414,11 @@ Prefab:
       propertyPath: robot
       value: 
       objectReference: {fileID: 922660003}
+    - target: {fileID: 114235219134917100, guid: 953d73fb6f443164fb59a1c489c62ed6,
+        type: 2}
+      propertyPath: drivePowerComsumption
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 953d73fb6f443164fb59a1c489c62ed6, type: 2}
   m_IsPrefabAsset: 0
@@ -3531,7 +3538,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.3764706, g: 0.37254903, b: 0.37254903, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -4249,7 +4256,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.3764706, g: 0.37254903, b: 0.37254903, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -6272,6 +6279,26 @@ Prefab:
     - target: {fileID: 1501853210479640, guid: ba8d2f09f283d6345b8ddad2251c47c1, type: 2}
       propertyPath: m_TagString
       value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 114793300168539780, guid: ba8d2f09f283d6345b8ddad2251c47c1,
+        type: 2}
+      propertyPath: drivePowerComsumption
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114045936719540878, guid: ba8d2f09f283d6345b8ddad2251c47c1,
+        type: 2}
+      propertyPath: shooterPowerConsumption
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 64170150610718058, guid: ba8d2f09f283d6345b8ddad2251c47c1,
+        type: 2}
+      propertyPath: m_CookingOptions
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 64170150610718058, guid: ba8d2f09f283d6345b8ddad2251c47c1,
+        type: 2}
+      propertyPath: m_SkinWidth
+      value: 0.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ba8d2f09f283d6345b8ddad2251c47c1, type: 2}
