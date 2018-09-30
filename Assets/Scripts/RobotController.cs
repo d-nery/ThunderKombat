@@ -8,6 +8,9 @@ public class RobotController : MonoBehaviour {
     public WheelCollider leftWheel, rightWheel, leftWheelFront, rightWheelFront;
     public int playerNumber = 1;
 
+    public int drivePowerComsumption = 3;
+
+    private RobotBattery battery;
     private float seconds = 0;
     private bool shouldBlink = false;
 
@@ -19,6 +22,7 @@ public class RobotController : MonoBehaviour {
     void Start () {
         seconds = 0;
         shouldBlink = false;
+        battery = GetComponent<RobotBattery>();
         InvokeRepeating("Blink", 0, 0.5f);
         initialPosition = gameObject.transform.position;
         initialRotation = gameObject.transform.rotation;
@@ -37,6 +41,8 @@ public class RobotController : MonoBehaviour {
     void FixedUpdate () {
         float v = Input.GetAxis("P" + playerNumber + "Yaxis") * motorForce;
         float h = Input.GetAxis("P" + playerNumber + "Xaxis") * motorForce;
+
+        print("v = " + v + ", h = " + h);
 
         if (Vector3.Dot(transform.up, Vector3.down) > 0) {
             if (Time.fixedTime - seconds >= 7) {
@@ -60,6 +66,8 @@ public class RobotController : MonoBehaviour {
             rightWheel.brakeTorque = 0;
             leftWheelFront.brakeTorque = 0;
             rightWheelFront.brakeTorque = 0;
+
+            battery.IncreasePowerConsumption(drivePowerComsumption);
         } else if (v >= -motorForce && v < -motorForce + 1000) {
             leftWheel.motorTorque = motorForce;
             leftWheelFront.motorTorque = motorForce;
@@ -70,6 +78,8 @@ public class RobotController : MonoBehaviour {
             rightWheel.brakeTorque = 0;
             leftWheelFront.brakeTorque = 0;
             rightWheelFront.brakeTorque = 0;
+
+            battery.IncreasePowerConsumption(drivePowerComsumption);
         } else if (h >= -motorForce && h < -motorForce + 1000) {
             leftWheel.motorTorque = motorForce * spinFactor;
             leftWheelFront.motorTorque = motorForce * spinFactor;
@@ -80,6 +90,8 @@ public class RobotController : MonoBehaviour {
             rightWheel.brakeTorque = 0;
             leftWheelFront.brakeTorque = 0;
             rightWheelFront.brakeTorque = 0;
+
+            battery.IncreasePowerConsumption(drivePowerComsumption);
         } else if (h <= motorForce && h > motorForce - 1000) {
             leftWheel.motorTorque = -motorForce * spinFactor;
             leftWheelFront.motorTorque = -motorForce * spinFactor;
@@ -90,6 +102,8 @@ public class RobotController : MonoBehaviour {
             rightWheel.brakeTorque = 0;
             leftWheelFront.brakeTorque = 0;
             rightWheelFront.brakeTorque = 0;
+
+            battery.IncreasePowerConsumption(drivePowerComsumption);
         } else {
             leftWheel.motorTorque = 0;
             leftWheelFront.motorTorque = 0;
