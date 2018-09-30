@@ -31,7 +31,14 @@ public class RobotController : MonoBehaviour {
         GetComponent<Rigidbody>().maxAngularVelocity = 1.5f;
     }
 
-    public void ResetTransform() {
+    public void ResetPos() {
+        gameObject.transform.position = initialPosition;
+        gameObject.transform.rotation = initialRotation;
+        GetComponent<Rigidbody>().velocity = Vector3.zero;
+        GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+    }
+
+    private void ResetTransform() {
         if (Time.fixedTime - seconds >= 7) {
             resetting = false;
             gameObject.transform.position = initialPosition;
