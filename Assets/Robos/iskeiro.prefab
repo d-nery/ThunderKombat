@@ -1280,6 +1280,7 @@ GameObject:
   - component: {fileID: 64170150610718058}
   - component: {fileID: 54285191080106280}
   - component: {fileID: 138154848983829604}
+  - component: {fileID: 65953493333308422}
   m_Layer: 0
   m_Name: Shape_IndexedFaceSet_141
   m_TagString: Wedge
@@ -10586,8 +10587,8 @@ Rigidbody:
   m_GameObject: {fileID: 1501853210479640}
   serializedVersion: 2
   m_Mass: 700
-  m_Drag: 10
-  m_AngularDrag: 0.05
+  m_Drag: 0.2
+  m_AngularDrag: 0.1
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -10599,7 +10600,7 @@ MeshCollider:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1490233713346208}
-  m_Material: {fileID: 13400000, guid: f49607406c174e6448ab1182b9471d65, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -10617,8 +10618,20 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 19.711334, y: 3.9042568, z: 15.033539}
-  m_Center: {x: 9.657333, y: 12.483413, z: -12.947174}
+  m_Size: {x: 19.711334, y: 5.100234, z: 15.033539}
+  m_Center: {x: 9.657333, y: 12.118608, z: -12.947174}
+--- !u!65 &65953493333308422
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1490233713346208}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 27.305847, y: 0.5785332, z: 6.8060074}
+  m_Center: {x: -9.55172, y: 9.803894, z: 24.778736}
 --- !u!95 &95660302456012294
 Animator:
   serializedVersion: 3
@@ -10651,7 +10664,8 @@ MonoBehaviour:
   bulletPrefab: {fileID: 1372040286346358, guid: 53ebac442b16db64f9177d0c749cbb06,
     type: 2}
   shootingTip: {fileID: 1585670118128948}
-  shootSpeed: 30
+  shootSpeed: 20
+  seconds: 0
 --- !u!114 &114318425948978544
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -10679,9 +10693,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3799bf7a3d1eb634983efcd8b9d6b1ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  motorForce: 5000
+  motorForce: 6000
   brakeForce: 50000
-  spinFactor: 1
+  spinFactor: 0.6
   leftWheel: {fileID: 146747974303659862}
   rightWheel: {fileID: 146659910747762508}
   leftWheelFront: {fileID: 146035400082561194}
@@ -10715,7 +10729,7 @@ WheelCollider:
   m_SuspensionDistance: 0.3
   m_ForceAppPointDistance: 0
   m_Mass: 100
-  m_WheelDampingRate: 0.25
+  m_WheelDampingRate: 500
   m_ForwardFriction:
     m_ExtremumSlip: 0.4
     m_ExtremumValue: 1
@@ -10744,7 +10758,7 @@ WheelCollider:
   m_SuspensionDistance: 0.3
   m_ForceAppPointDistance: 0
   m_Mass: 100
-  m_WheelDampingRate: 0.25
+  m_WheelDampingRate: 500
   m_ForwardFriction:
     m_ExtremumSlip: 0.4
     m_ExtremumValue: 1
@@ -10773,7 +10787,7 @@ WheelCollider:
   m_SuspensionDistance: 0.3
   m_ForceAppPointDistance: 0
   m_Mass: 100
-  m_WheelDampingRate: 0.25
+  m_WheelDampingRate: 500
   m_ForwardFriction:
     m_ExtremumSlip: 0.4
     m_ExtremumValue: 1
@@ -10802,7 +10816,7 @@ WheelCollider:
   m_SuspensionDistance: 0.3
   m_ForceAppPointDistance: 0
   m_Mass: 100
-  m_WheelDampingRate: 0.25
+  m_WheelDampingRate: 500
   m_ForwardFriction:
     m_ExtremumSlip: 0.4
     m_ExtremumValue: 1
