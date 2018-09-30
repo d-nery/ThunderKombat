@@ -12,10 +12,25 @@ public class RobotController : MonoBehaviour {
     private bool shouldBlink = false;
 
     // Use this for initialization
+    private Vector3 initialPosition;
+    private Quaternion initialRotation;
+
+    // Use this for initialization
     void Start () {
         seconds = 0;
         shouldBlink = false;
         InvokeRepeating("Blink", 0, 0.5f);
+        initialPosition = gameObject.transform.position;
+        initialRotation = gameObject.transform.rotation;
+
+        GetComponent<Rigidbody>().maxAngularVelocity = 1.5f;
+    }
+
+    void ResetTransform() {
+        gameObject.transform.position = initialPosition;
+        gameObject.transform.rotation = initialRotation;
+        GetComponent<Rigidbody>().velocity = Vector3.zero;
+        GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
     }
 
     // Update is called once per frame
@@ -26,12 +41,12 @@ public class RobotController : MonoBehaviour {
         if (Vector3.Dot(transform.up, Vector3.down) > 0) {
             if (Time.fixedTime - seconds >= 7) {
                 shouldBlink = false;
-                gameObject.transform.Rotate(180, 0, 0);
-                gameObject.transform.position = new Vector3(180.0f, 5f, 0f);
+                ResetTransform();
             } else if (Time.fixedTime - seconds >= 4.5) {
                 shouldBlink = true;
             }
         } else {
+            shouldBlink = false;
             seconds = Time.fixedTime;
         }
 
@@ -98,6 +113,11 @@ public class RobotController : MonoBehaviour {
             leftWheelFront.brakeTorque = 0;
             rightWheelFront.brakeTorque = 0;
         }
+
+        // leftWheel.brakeTorque= 1;
+        // leftWheelFront.brakeTorque= 1;
+        // rightWheel.brakeTorque= 1;
+        // rightWheelFront.brakeTorque= 1;
     }
 
     void Blink() {
