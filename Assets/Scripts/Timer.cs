@@ -8,12 +8,15 @@ public class Timer : MonoBehaviour {
 
     // Use this for initializatio
     public Text timerText;
-    private bool finished = false;
-    public float maxTime = 6;
+    public bool finished = false;
+    public float maxTime = 60;
     private float startTime;
-	void Start () {
+    public AudioSource audioData;
+    private bool isPlaying = false;
+    void Start () {
         startTime = Time.fixedTime/3.0f;
-	}
+        audioData = GetComponent<AudioSource>();
+    }
 
 	// Update is called once per frame
 	void Update () {
@@ -28,6 +31,12 @@ public class Timer : MonoBehaviour {
         string seconds = (t % 60).ToString("f0");
 
         timerText.text = seconds;
+
+        if ( t < 10.9 && isPlaying == false)
+        {
+            isPlaying = true;
+            audioData.Play();
+        }
 
         if (t < 0)
         {

@@ -5,7 +5,7 @@ using System.Collections;
 public class RobotHealth : MonoBehaviour
 {
     public int startingHealth = 100;
-    private int currentHealth;
+    public int currentHealth;
 	public int bulletDamage = 10;
 	public int activeWeaponDamage = 20;
 	public int wedgeDamage = 15;
