@@ -19,6 +19,11 @@ public class GameManager : MonoBehaviour {
     public int IskeiroWins = 0;
     public int DarcWins = 0;
 
+    public AudioSource audioExcellent;
+    public AudioSource audioImpressive;
+    public AudioSource audioWellDone;
+    private bool isPlaying = false;
+
 
     void Start () {
 
@@ -26,6 +31,10 @@ public class GameManager : MonoBehaviour {
         DarcHealth = darc.GetComponent<RobotHealth>();
         WinnerName = WinText.GetComponent<Text>();
         GameTimer = Canvas.GetComponent<Timer>();
+        audioExcellent = GetComponent<AudioSource>();
+        audioImpressive = GetComponent<AudioSource>();
+        audioWellDone = GetComponent<AudioSource>();
+
     }
 	
 	// Update is called once per frame
@@ -58,12 +67,14 @@ public class GameManager : MonoBehaviour {
                 if (IskeiroHealth.currentHealth <= 0)
                 {
                     DarcWins++;
+                    audioExcellent.Play();
                     GameTimer.finished = true;
                     WinnerName.text = "Iskeiro  K.O";
                 }
                 else if (DarcHealth.currentHealth <= 0)
                 {
                     IskeiroWins++;
+                    audioExcellent.Play();
                     GameTimer.finished = true;
                     WinnerName.text = "Darc  K.O";
                 }
@@ -82,11 +93,13 @@ public class GameManager : MonoBehaviour {
                 if (10 * IskeiroHealth.currentHealth > DarcHealth.currentHealth)
                 {
                     IskeiroWins++;
+                    audioImpressive.Play();
                     WinnerName.text = "Iskeiro  Wins";
                 }
                 else if (10 * IskeiroHealth.currentHealth < DarcHealth.currentHealth)
                 {
                     DarcWins++;
+                    audioImpressive.Play();
                     WinnerName.text = "Iskeiro  K.O";
                 }
                 else
@@ -101,11 +114,13 @@ public class GameManager : MonoBehaviour {
                 {
                     DarcWins++;
                     GameTimer.finished = true;
+                    audioImpressive.Play();
                     WinnerName.text = "Iskeiro  K.O";
                 }
                 else if (DarcHealth.currentHealth <= 0)
                 {
                     IskeiroWins++;
+                    audioImpressive.Play();
                     GameTimer.finished = true;
                     WinnerName.text = "Iskeiro  Wins";
                 }
@@ -142,12 +157,14 @@ public class GameManager : MonoBehaviour {
                 if (IskeiroHealth.currentHealth <= 0)
                 {
                     DarcWins++;
+                    audioImpressive.Play();
                     GameTimer.finished = true;
                     WinnerName.text = "Darc  Wins";
                 }
                 else if (DarcHealth.currentHealth <= 0)
                 {
                     IskeiroWins++;
+                    audioImpressive.Play();
                     GameTimer.finished = true;
                     WinnerName.text = "Darc  K.O";
                 }
@@ -184,12 +201,14 @@ public class GameManager : MonoBehaviour {
                 if (IskeiroHealth.currentHealth <= 0)
                 {
                     DarcWins++;
+                    audioWellDone.Play();
                     GameTimer.finished = true;
                     WinnerName.text = "Darc  Wins";
                 }
                 else if (DarcHealth.currentHealth <= 0)
                 {
                     IskeiroWins++;
+                    audioWellDone.Play();
                     GameTimer.finished = true;
                     WinnerName.text = "Iskeiro Wins";
                 }
