@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
@@ -11,12 +12,15 @@ public class GameManager : MonoBehaviour {
     public GameObject darc;
     public GameObject Canvas;
     public int Round = 0;
+    public bool GameFinished = false;
 
-    RobotHealth IskeiroHealth;
-    RobotHealth DarcHealth;
-    RobotController robotController;
+    private RobotHealth IskeiroHealth;
+    private RobotHealth DarcHealth;
+    RobotController robotControllerIskeiro;
+    RobotController robotControllerDarc;
     Text WinnerName;
     Timer GameTimer;
+
     public int IskeiroWins = 0;
     public int DarcWins = 0;
 
@@ -24,255 +28,182 @@ public class GameManager : MonoBehaviour {
     public AudioSource audioImpressive;
     public AudioSource audioWellDone;
     private bool isPlaying = false;
+    private float sec = 0;
+
+    private bool resetting = false;
 
 
     void Start () {
-
         IskeiroHealth = Iskeiro.GetComponent<RobotHealth>();
         DarcHealth = darc.GetComponent<RobotHealth>();
+
         WinnerName = WinText.GetComponent<Text>();
         GameTimer = Canvas.GetComponent<Timer>();
+
         audioExcellent = GetComponent<AudioSource>();
         audioImpressive = GetComponent<AudioSource>();
         audioWellDone = GetComponent<AudioSource>();
-        robotController = GetComponent<RobotController>();
 
+        robotControllerIskeiro = Iskeiro.GetComponent<RobotController>();
+        robotControllerDarc = darc.GetComponent<RobotController>();
+
+        resetting = false;
     }
-	
-	// Update is called once per frame
 
-    void ResetGame(bool IskeiroVictory, bool DarcVictory)
-    {
+    void ResetGame(bool IskeiroVictory, bool DarcVictory) {
+        resetting = true;
+
+        if (Time.fixedTime - sec < 3f)
+            return;
+
         if (IskeiroVictory)
             IskeiroWins++;
         if (DarcVictory)
             DarcWins++;
 
-        
-        IskeiroHealth.currentHealth = 100;
-        DarcHealth.currentHealth = 1000;
-        GameTimer.finished = true;
-        robotController.ResetTransform();
+        IskeiroHealth.currentHealth = IskeiroHealth.startingHealth;
+        DarcHealth.currentHealth = DarcHealth.startingHealth;
 
+        IskeiroHealth.healthSlider.value = IskeiroHealth.startingHealth;
+        DarcHealth.healthSlider.value = DarcHealth.startingHealth;
 
+        robotControllerDarc.ResetPos();
+        robotControllerIskeiro.ResetPos();
+        IskeiroHealth.currentHealth = IskeiroHealth.startingHealth;
+        DarcHealth.currentHealth = DarcHealth.startingHealth;
 
+        GameTimer.finished = false;
+        GameTimer.startTime = Time.fixedTime / 3.0f;
+
+        IskeiroHealth.healthSlider.value = IskeiroHealth.startingHealth;
+        DarcHealth.healthSlider.value = DarcHealth.startingHealth;
+
+        resetting = false;
     }
-	void Update () {
 
-
-        if (IskeiroWins == 0 && DarcWins == 0) // Primeira vitoria de cada um
-        {
-            if (GameTimer.finished)
-            {
-
-                if (10 * IskeiroHealth.currentHealth > DarcHealth.currentHealth)
-                {
-                    ResetGame(true, false);
-                    WinnerName.text = "Darc  K.O";
-                }
-                else if (10 * IskeiroHealth.currentHealth < DarcHealth.currentHealth)
-                {
-                    ResetGame(false, true);
-                    WinnerName.text = "Iskeiro  K.O";
-                }
-                else
-                {
-                    ResetGame(false, false);
-                    WinnerName.text = "Draw";
-                }
-
+    void Update () {
+        if (GameFinished == true) {
+            if (Input.GetAxis("P1A") > 0) {
+                SceneManager.LoadScene(0);
             }
-            else
-            {
-                if (IskeiroHealth.currentHealth <= 0)
-                {
-                    ResetGame(false, true);
-                    WinnerName.text = "Iskeiro  K.O";
-                    audioExcellent.Play();
-                }
-                else if (DarcHealth.currentHealth <= 0)
-                {
-                    ResetGame(true, false);
-                    WinnerName.text = "Darc  K.O";
-                }
-                else // Durante o jogo
-                {
-                    WinnerName.text = "";
-                }
-            }
+            return;
         }
 
-        else if (IskeiroWins == 1 && DarcWins == 0)
-        {
-            if (GameTimer.finished)
-            {
+        if (!resetting) {
+            sec = Time.fixedTime;
+        }
 
-                if (10 * IskeiroHealth.currentHealth > DarcHealth.currentHealth) //Game Finish
-                {
+        if (IskeiroWins == 0 && DarcWins == 0) {
+            if (GameTimer.finished) {
+                if (10 * IskeiroHealth.currentHealth > DarcHealth.currentHealth) {
+                    WinnerName.text = "Darc  K.O";
                     ResetGame(true, false);
-                    audioExcellent.Play();
-                    WinnerName.text = "Iskeiro  Wins";
-                }
-                else if (10 * IskeiroHealth.currentHealth < DarcHealth.currentHealth)
-                {
-                    ResetGame(false, true);     
-                    audioImpressive.Play();
-                    WinnerName.text = "Iskeiro  K.O";
 
-                }
-                else
-                {
+                } else if (10 * IskeiroHealth.currentHealth < DarcHealth.currentHealth) {
+                    WinnerName.text = "Iskeiro  K.O";
+                    ResetGame(false, true);
+                } else {
                     WinnerName.text = "Draw";
                     ResetGame(false, false);
                 }
-
-            }
-            else
-            {
-                if (IskeiroHealth.currentHealth <= 0) //Iskeiro Perde
-                {
+            } else {
+                if (IskeiroHealth.currentHealth <= 0) {
+                    WinnerName.text = "Iskeiro  K.O";
                     ResetGame(false, true);
+                    audioExcellent.Play();
+                } else if (DarcHealth.currentHealth <= 0) {
+                    WinnerName.text = "Darc  K.O";
+                    ResetGame(true, false);
+                } else {
+                    WinnerName.text = "";
+                }
+            }
+        } else if (IskeiroWins == 1 && DarcWins == 0) {
+            if (GameTimer.finished) {
+                if (10 * IskeiroHealth.currentHealth > DarcHealth.currentHealth) {
+                    GameFinished = true;
+                    WinnerName.text = "Iskeiro  Wins";
+                    audioExcellent.Play();
+                    ResetGame(true, false);
+                }
+                else if (10 * IskeiroHealth.currentHealth < DarcHealth.currentHealth) {
                     audioImpressive.Play();
                     WinnerName.text = "Iskeiro  K.O";
+                    ResetGame(false, true);
+                } else {
+                    WinnerName.text = "Draw";
+                    ResetGame(false, false);
                 }
-                else if (DarcHealth.currentHealth <= 0)
-                {
-                    ResetGame(true, false);
+            } else {
+                if (IskeiroHealth.currentHealth <= 0) {
+                    WinnerName.text = "Iskeiro  K.O";
                     audioImpressive.Play();
+                    ResetGame(false, true);
+                } else if (DarcHealth.currentHealth <= 0) {
+                    GameFinished = true;
                     WinnerName.text = "Iskeiro  Wins";
-                }
-                else // Não acabou
-                {
-                    WinnerName.text = "";
-                }
-            }
-        }
-
-        else if (IskeiroWins == 0 && DarcWins == 1) //Continuar Usar função depois
-        {
-            if (GameTimer.finished)
-            {
-
-                if (10 * IskeiroHealth.currentHealth > DarcHealth.currentHealth)
-                {
-                    GameTimer.finished = true;
-                    IskeiroWins++;
-                    WinnerName.text = "Darc  K.O";
-                    IskeiroHealth.currentHealth = 100;
-                    DarcHealth.currentHealth = 1000;
-                    robotController.ResetTransform();
-                }
-                else if (10 * IskeiroHealth.currentHealth < DarcHealth.currentHealth)
-                {
-                    GameTimer.finished = true;
-                    DarcWins++;
-                    WinnerName.text = "Darc  Wins";
-                    IskeiroHealth.currentHealth = 100;
-                    DarcHealth.currentHealth = 1000;
-                    robotController.ResetTransform();
-                }
-                else
-                {
-                    GameTimer.finished = true;
-                    WinnerName.text = "Draw";
-                    IskeiroHealth.currentHealth = 100;
-                    DarcHealth.currentHealth = 1000;
-                    robotController.ResetTransform();
-                }
-
-            }
-            else
-            {
-                if (IskeiroHealth.currentHealth <= 0)
-                {
-                    DarcWins++;
                     audioImpressive.Play();
-                    GameTimer.finished = true;
-                    WinnerName.text = "Darc  Wins";
-                    IskeiroHealth.currentHealth = 100;
-                    DarcHealth.currentHealth = 1000;
-                    robotController.ResetTransform();
+                    ResetGame(true, false);
+                } else {
+                    WinnerName.text = "";
                 }
-                else if (DarcHealth.currentHealth <= 0)
-                {
-                    IskeiroWins++;
-                    audioImpressive.Play();
-                    GameTimer.finished = true;
+            }
+        } else if (IskeiroWins == 0 && DarcWins == 1) {
+            if (GameTimer.finished) {
+                if (10 * IskeiroHealth.currentHealth > DarcHealth.currentHealth) {
                     WinnerName.text = "Darc  K.O";
-                    IskeiroHealth.currentHealth = 100;
-                    DarcHealth.currentHealth = 1000;
-                    robotController.ResetTransform();
-                }
-                else // Não acabou
-                {
-                    WinnerName.text = "";
-                }
-            }
-        }
-
-        else if (IskeiroWins == 1 && DarcWins == 1)
-        {
-            if (GameTimer.finished)
-            {
-
-                if (10 * IskeiroHealth.currentHealth > DarcHealth.currentHealth)
-                {
-                    IskeiroWins++;
-                    GameTimer.finished = true;
-                    WinnerName.text = "Iskeiro Wins";
-                    GameTimer.finished = true;
-                    IskeiroHealth.currentHealth = 100;
-                    DarcHealth.currentHealth = 1000;
-                    robotController.ResetTransform();
-                }
-                else if (10 * IskeiroHealth.currentHealth < DarcHealth.currentHealth)
-                {
-                    DarcWins++;
-                    GameTimer.finished = true;
+                    ResetGame(true, false);
+                } else if (10 * IskeiroHealth.currentHealth < DarcHealth.currentHealth) {
+                    GameFinished = true;
                     WinnerName.text = "Darc  Wins";
-                    GameTimer.finished = true;
-                    IskeiroHealth.currentHealth = 100;
-                    DarcHealth.currentHealth = 1000;
-                    robotController.ResetTransform();
-                }
-                else
-                {
+                    ResetGame(false, true);
+                } else {
                     WinnerName.text = "Draw";
-                    GameTimer.finished = true;
-                    IskeiroHealth.currentHealth = 100;
-                    DarcHealth.currentHealth = 1000;
-                    robotController.ResetTransform();
+                    ResetGame(false, false);
                 }
-
-            }
-            else
-            {
-                if (IskeiroHealth.currentHealth <= 0)
-                {
-                    DarcWins++;
-                    audioWellDone.Play();
-                    GameTimer.finished = true;
+            } else {
+                if (IskeiroHealth.currentHealth <= 0) {
+                    GameFinished = true;
                     WinnerName.text = "Darc  Wins";
-                    IskeiroHealth.currentHealth = 100;
-                    DarcHealth.currentHealth = 1000;
-                    robotController.ResetTransform();
+                    audioImpressive.Play();
+                    ResetGame(false, true);
+                } else if (DarcHealth.currentHealth <= 0) {
+                    WinnerName.text = "Darc  K.O";
+                    audioImpressive.Play();
+                    ResetGame(true, false);
+                } else {
+                    WinnerName.text = "";
                 }
-                else if (DarcHealth.currentHealth <= 0)
-                {
-                    IskeiroWins++;
-                    audioWellDone.Play();
-                    GameTimer.finished = true;
+            }
+        } else if (IskeiroWins == 1 && DarcWins == 1) {
+            if (GameTimer.finished) {
+                if (10 * IskeiroHealth.currentHealth > DarcHealth.currentHealth) {
                     WinnerName.text = "Iskeiro Wins";
-                    IskeiroHealth.currentHealth = 100;
-                    DarcHealth.currentHealth = 1000;
-                    robotController.ResetTransform();
+                    GameFinished = true;
+                    ResetGame(true, false);
+                } else if (10 * IskeiroHealth.currentHealth < DarcHealth.currentHealth) {
+                    GameFinished = true;
+                    WinnerName.text = "Darc  Wins";
+                    ResetGame(false, true);
+                } else {
+                    WinnerName.text = "Draw";
+                    ResetGame(false, false);
                 }
-                else // Não acabou
-                {
+            } else {
+                if (IskeiroHealth.currentHealth <= 0) {
+                    GameFinished = true;
+                    WinnerName.text = "Darc  Wins";
+                    audioWellDone.Play();
+                    ResetGame(false, true);
+                } else if (DarcHealth.currentHealth <= 0) {
+                    WinnerName.text = "Iskeiro  Wins";
+                    audioWellDone.Play();
+                    GameFinished = true;
+                    ResetGame(true, false);
+                } else {
                     WinnerName.text = "";
                 }
             }
         }
-
     }
 }

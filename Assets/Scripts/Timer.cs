@@ -10,9 +10,9 @@ public class Timer : MonoBehaviour {
     public Text timerText;
     public bool finished = false;
     public float maxTime = 60;
-    private float startTime;
+    public float startTime;
     public AudioSource audioData;
-    private bool isPlaying = false;
+    public bool isPlaying = false;
     void Start () {
         startTime = Time.fixedTime/3.0f;
         audioData = GetComponent<AudioSource>();

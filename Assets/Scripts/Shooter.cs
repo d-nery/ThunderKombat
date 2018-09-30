@@ -9,9 +9,6 @@ public class Shooter : MonoBehaviour {
     public float shootSpeed = 300;
     public float seconds = 0;
 
-    public int shooterPowerConsumption = 5;
-
-
     private RobotBattery battery;
 
     // Use this for initialization
@@ -20,11 +17,13 @@ public class Shooter : MonoBehaviour {
         battery = GetComponent<RobotBattery>();
     }
 
-    // Update is called once per frame
-    void Update () {
+    void FixedUpdate () {
         if (Time.fixedTime - seconds >= 0.7) {
-            if (Input.GetAxis("P1B") > 0) {
+            if (!battery.Empty() && Input.GetAxis("P1B") > 0) {
                 ShootBullet();
+                battery.Shooting(true);
+            } else {
+                battery.Shooting(false);
             }
             seconds = Time.fixedTime;
         }
@@ -38,7 +37,5 @@ public class Shooter : MonoBehaviour {
         Rigidbody projectile = tmpObj.GetComponent<Rigidbody>();
 
         projectile.velocity = -(shootingTip.transform.forward * shootSpeed);
-
-        battery.IncreasePowerConsumption(shooterPowerConsumption);
     }
 }
