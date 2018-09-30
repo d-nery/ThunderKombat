@@ -43,7 +43,7 @@ public class RobotController : MonoBehaviour {
         float v = Input.GetAxis("P" + playerNumber + "Yaxis") * motorForce;
         float h = Input.GetAxis("P" + playerNumber + "Xaxis") * motorForce;
 
-        print("v = " + v + ", h = " + h);
+        // print("v = " + v + ", h = " + h);
 
         if (Vector3.Dot(transform.up, Vector3.down) > 0) {
             if (Time.fixedTime - seconds >= 7) {
