@@ -8,6 +8,9 @@ public class RobotController : MonoBehaviour {
     public WheelCollider leftWheel, rightWheel, leftWheelFront, rightWheelFront;
     public int playerNumber = 1;
 
+    public int drivePowerComsumption = 3;
+
+    private RobotBattery battery;
     private float seconds = 0;
     private bool shouldBlink = false;
 
@@ -15,6 +18,7 @@ public class RobotController : MonoBehaviour {
     void Start () {
         seconds = 0;
         shouldBlink = false;
+        battery = GetComponent<RobotBattery>();
         InvokeRepeating("Blink", 0, 0.5f);
     }
 
@@ -45,6 +49,8 @@ public class RobotController : MonoBehaviour {
             rightWheel.brakeTorque = 0;
             leftWheelFront.brakeTorque = 0;
             rightWheelFront.brakeTorque = 0;
+
+            battery.IncreasePowerConsumption(drivePowerComsumption);
         } else if (v >= -motorForce && v < -motorForce + 1000) {
             leftWheel.motorTorque = motorForce;
             leftWheelFront.motorTorque = motorForce;
@@ -55,6 +61,8 @@ public class RobotController : MonoBehaviour {
             rightWheel.brakeTorque = 0;
             leftWheelFront.brakeTorque = 0;
             rightWheelFront.brakeTorque = 0;
+
+            battery.IncreasePowerConsumption(drivePowerComsumption);
         } else if (h >= -motorForce && h < -motorForce + 1000) {
             leftWheel.motorTorque = motorForce * spinFactor;
             leftWheelFront.motorTorque = motorForce * spinFactor;
@@ -65,6 +73,8 @@ public class RobotController : MonoBehaviour {
             rightWheel.brakeTorque = 0;
             leftWheelFront.brakeTorque = 0;
             rightWheelFront.brakeTorque = 0;
+
+            battery.IncreasePowerConsumption(drivePowerComsumption);
         } else if (h <= motorForce && h > motorForce - 1000) {
             leftWheel.motorTorque = -motorForce * spinFactor;
             leftWheelFront.motorTorque = -motorForce * spinFactor;
@@ -75,6 +85,8 @@ public class RobotController : MonoBehaviour {
             rightWheel.brakeTorque = 0;
             leftWheelFront.brakeTorque = 0;
             rightWheelFront.brakeTorque = 0;
+
+            battery.IncreasePowerConsumption(drivePowerComsumption);
         } else {
             leftWheel.motorTorque = 0;
             leftWheelFront.motorTorque = 0;
