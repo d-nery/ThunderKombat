@@ -9,9 +9,15 @@ public class Shooter : MonoBehaviour {
     public float shootSpeed = 300;
     public float seconds = 0;
 
+    public int shooterPowerConsumption = 5;
+
+
+    private RobotBattery battery;
+
     // Use this for initialization
     void Start () {
         seconds = 0;
+        battery = GetComponent<RobotBattery>();
     }
 
     // Update is called once per frame
@@ -32,5 +38,7 @@ public class Shooter : MonoBehaviour {
         Rigidbody projectile = tmpObj.GetComponent<Rigidbody>();
 
         projectile.velocity = -(shootingTip.transform.forward * shootSpeed);
+
+        battery.IncreasePowerConsumption(shooterPowerConsumption);
     }
 }
