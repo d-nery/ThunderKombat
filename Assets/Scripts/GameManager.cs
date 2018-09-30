@@ -15,7 +15,9 @@ public class GameManager : MonoBehaviour {
     public bool GameFinished = false;
 
     private RobotHealth IskeiroHealth;
+    private RobotBattery IskeiroBattery;
     private RobotHealth DarcHealth;
+    private RobotBattery DarcBattery;
     RobotController robotControllerIskeiro;
     RobotController robotControllerDarc;
     Text WinnerName;
@@ -36,6 +38,8 @@ public class GameManager : MonoBehaviour {
     void Start () {
         IskeiroHealth = Iskeiro.GetComponent<RobotHealth>();
         DarcHealth = darc.GetComponent<RobotHealth>();
+        DarcBattery = darc.GetComponent<RobotBattery>();
+        IskeiroBattery = Iskeiro.GetComponent<RobotBattery>();
 
         WinnerName = WinText.GetComponent<Text>();
         GameTimer = Canvas.GetComponent<Timer>();
@@ -61,22 +65,22 @@ public class GameManager : MonoBehaviour {
         if (DarcVictory)
             DarcWins++;
 
-        IskeiroHealth.currentHealth = IskeiroHealth.startingHealth;
-        DarcHealth.currentHealth = DarcHealth.startingHealth;
-
-        IskeiroHealth.healthSlider.value = IskeiroHealth.startingHealth;
-        DarcHealth.healthSlider.value = DarcHealth.startingHealth;
 
         robotControllerDarc.ResetPos();
         robotControllerIskeiro.ResetPos();
+
         IskeiroHealth.currentHealth = IskeiroHealth.startingHealth;
         DarcHealth.currentHealth = DarcHealth.startingHealth;
+        IskeiroHealth.healthSlider.value = IskeiroHealth.startingHealth;
+        DarcHealth.healthSlider.value = DarcHealth.startingHealth;
+
+        IskeiroBattery.currentCharge = IskeiroBattery.startingCharge;
+        DarcBattery.currentCharge = DarcBattery.startingCharge;
+        IskeiroBattery.batterySlider.value = IskeiroBattery.startingCharge;
+        DarcBattery.batterySlider.value = DarcBattery.startingCharge;
 
         GameTimer.finished = false;
         GameTimer.startTime = Time.fixedTime / 3.0f;
-
-        IskeiroHealth.healthSlider.value = IskeiroHealth.startingHealth;
-        DarcHealth.healthSlider.value = DarcHealth.startingHealth;
 
         resetting = false;
     }

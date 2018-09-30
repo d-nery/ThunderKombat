@@ -5,7 +5,7 @@ using System.Collections;
 public class RobotBattery : MonoBehaviour
 {
     public int startingCharge = 1000;
-    private int currentCharge;
+    public int currentCharge;
     public float dischargeRate = 1f;
     private int powerConsumption = 0;
     public Slider batterySlider;
