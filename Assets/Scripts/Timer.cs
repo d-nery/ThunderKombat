@@ -10,7 +10,7 @@ public class Timer : MonoBehaviour {
     public Text timerText;
     public bool finished = false;
     public float maxTime = 60;
-    private float startTime;
+    public float startTime;
     public AudioSource audioData;
     private bool isPlaying = false;
     void Start () {

@@ -11,12 +11,15 @@ public class GameManager : MonoBehaviour {
     public GameObject darc;
     public GameObject Canvas;
     public int Round = 0;
+    public bool GameFinished = false;
 
     RobotHealth IskeiroHealth;
     RobotHealth DarcHealth;
-    RobotController robotController;
+    RobotController robotControllerIskeiro;
+    RobotController robotControllerDarc;
     Text WinnerName;
     Timer GameTimer;
+
     public int IskeiroWins = 0;
     public int DarcWins = 0;
 
@@ -35,13 +38,18 @@ public class GameManager : MonoBehaviour {
         audioExcellent = GetComponent<AudioSource>();
         audioImpressive = GetComponent<AudioSource>();
         audioWellDone = GetComponent<AudioSource>();
-        robotController = GetComponent<RobotController>();
+        robotControllerIskeiro = Iskeiro.GetComponent<RobotController>();
+        robotControllerDarc = darc.GetComponent<RobotController>();
+
+
+
+
 
     }
 
     // Update is called once per frame
 
-    void ResetGame(bool IskeiroVictory, bool DarcVictory)
+    IEnumerator ResetGame(bool IskeiroVictory, bool DarcVictory)
     {
         if (IskeiroVictory)
             IskeiroWins++;
@@ -49,11 +57,37 @@ public class GameManager : MonoBehaviour {
             DarcWins++;
 
 
-        IskeiroHealth.currentHealth = 100;
-        DarcHealth.currentHealth = 1000;
-        GameTimer.finished = true;
-        robotController.ResetTransform();
+        IskeiroHealth.currentHealth = IskeiroHealth.startingHealth;
+        DarcHealth.currentHealth = DarcHealth.startingHealth;
+
+
+        IskeiroHealth.healthSlider.value = IskeiroHealth.startingHealth;
+        DarcHealth.healthSlider.value = DarcHealth.startingHealth;
+
+       yield return new WaitForSeconds(3);
+       robotControllerDarc.ResetTransform();
+       robotControllerIskeiro.ResetTransform();
+        IskeiroHealth.currentHealth = IskeiroHealth.startingHealth;
+        DarcHealth.currentHealth = DarcHealth.startingHealth;
+
+        GameTimer.finished = false;
+        GameTimer.startTime = Time.fixedTime / 3.0f;
+
+        IskeiroHealth.healthSlider.value = IskeiroHealth.startingHealth;
+        DarcHealth.healthSlider.value = DarcHealth.startingHealth;
+
+
+
+
+
     }
+	void Update () {
+
+        if (GameFinished == true)
+        {
+            return;
+        }
+
 
     void Update () {
         if (IskeiroWins == 0 && DarcWins == 0) // Primeira vitoria de cada um
@@ -63,17 +97,17 @@ public class GameManager : MonoBehaviour {
 
                 if (10 * IskeiroHealth.currentHealth > DarcHealth.currentHealth)
                 {
-                    ResetGame(true, false);
+                    StartCoroutine(ResetGame(true, false));
                     WinnerName.text = "Darc  K.O";
                 }
                 else if (10 * IskeiroHealth.currentHealth < DarcHealth.currentHealth)
                 {
-                    ResetGame(false, true);
+                    StartCoroutine(ResetGame(false, true));
                     WinnerName.text = "Iskeiro  K.O";
                 }
                 else
                 {
-                    ResetGame(false, false);
+                    StartCoroutine(ResetGame(false, false));
                     WinnerName.text = "Draw";
                 }
 
@@ -82,13 +116,13 @@ public class GameManager : MonoBehaviour {
             {
                 if (IskeiroHealth.currentHealth <= 0)
                 {
-                    ResetGame(false, true);
+                    StartCoroutine(ResetGame(false, true));
                     WinnerName.text = "Iskeiro  K.O";
                     audioExcellent.Play();
                 }
                 else if (DarcHealth.currentHealth <= 0)
                 {
-                    ResetGame(true, false);
+                    StartCoroutine(ResetGame(true, false));
                     WinnerName.text = "Darc  K.O";
                 }
                 else // Durante o jogo
@@ -105,13 +139,13 @@ public class GameManager : MonoBehaviour {
 
                 if (10 * IskeiroHealth.currentHealth > DarcHealth.currentHealth) //Game Finish
                 {
-                    ResetGame(true, false);
+                    StartCoroutine(ResetGame(true, false));
                     audioExcellent.Play();
                     WinnerName.text = "Iskeiro  Wins";
                 }
                 else if (10 * IskeiroHealth.currentHealth < DarcHealth.currentHealth)
                 {
-                    ResetGame(false, true);
+                    StartCoroutine(ResetGame(false, true));
                     audioImpressive.Play();
                     WinnerName.text = "Iskeiro  K.O";
 
@@ -119,7 +153,7 @@ public class GameManager : MonoBehaviour {
                 else
                 {
                     WinnerName.text = "Draw";
-                    ResetGame(false, false);
+                    StartCoroutine(ResetGame(false, false));
                 }
 
             }
@@ -127,13 +161,13 @@ public class GameManager : MonoBehaviour {
             {
                 if (IskeiroHealth.currentHealth <= 0) //Iskeiro Perde
                 {
-                    ResetGame(false, true);
+                    StartCoroutine(ResetGame(false, true));
                     audioImpressive.Play();
                     WinnerName.text = "Iskeiro  K.O";
                 }
                 else if (DarcHealth.currentHealth <= 0)
                 {
-                    ResetGame(true, false);
+                    StartCoroutine(ResetGame(true, false));
                     audioImpressive.Play();
                     WinnerName.text = "Iskeiro  Wins";
                 }
@@ -144,36 +178,30 @@ public class GameManager : MonoBehaviour {
             }
         }
 
-        else if (IskeiroWins == 0 && DarcWins == 1) //Continuar Usar função depois
+        else if (IskeiroWins == 0 && DarcWins == 1) //Continuar Usar função depois TO-DO
         {
             if (GameTimer.finished)
             {
 
                 if (10 * IskeiroHealth.currentHealth > DarcHealth.currentHealth)
                 {
-                    GameTimer.finished = true;
-                    IskeiroWins++;
+                    StartCoroutine(ResetGame(true, false));
                     WinnerName.text = "Darc  K.O";
-                    IskeiroHealth.currentHealth = 100;
-                    DarcHealth.currentHealth = 1000;
-                    robotController.ResetTransform();
+
+
                 }
                 else if (10 * IskeiroHealth.currentHealth < DarcHealth.currentHealth)
                 {
-                    GameTimer.finished = true;
-                    DarcWins++;
+                    StartCoroutine(ResetGame(false, true));
                     WinnerName.text = "Darc  Wins";
-                    IskeiroHealth.currentHealth = 100;
-                    DarcHealth.currentHealth = 1000;
-                    robotController.ResetTransform();
+
                 }
                 else
                 {
-                    GameTimer.finished = true;
+                    StartCoroutine(ResetGame(false, false));
                     WinnerName.text = "Draw";
-                    IskeiroHealth.currentHealth = 100;
-                    DarcHealth.currentHealth = 1000;
-                    robotController.ResetTransform();
+
+
                 }
 
             }
@@ -181,23 +209,18 @@ public class GameManager : MonoBehaviour {
             {
                 if (IskeiroHealth.currentHealth <= 0)
                 {
-                    DarcWins++;
-                    audioImpressive.Play();
-                    GameTimer.finished = true;
+                    StartCoroutine(ResetGame(false, true));
                     WinnerName.text = "Darc  Wins";
-                    IskeiroHealth.currentHealth = 100;
-                    DarcHealth.currentHealth = 1000;
-                    robotController.ResetTransform();
+                    audioImpressive.Play();
+
+
                 }
                 else if (DarcHealth.currentHealth <= 0)
                 {
-                    IskeiroWins++;
-                    audioImpressive.Play();
-                    GameTimer.finished = true;
+                    StartCoroutine(ResetGame(true, false));
                     WinnerName.text = "Darc  K.O";
-                    IskeiroHealth.currentHealth = 100;
-                    DarcHealth.currentHealth = 1000;
-                    robotController.ResetTransform();
+                    audioImpressive.Play();
+
                 }
                 else // Não acabou
                 {
@@ -213,31 +236,23 @@ public class GameManager : MonoBehaviour {
 
                 if (10 * IskeiroHealth.currentHealth > DarcHealth.currentHealth)
                 {
-                    IskeiroWins++;
-                    GameTimer.finished = true;
+                    StartCoroutine(ResetGame(true, false));
                     WinnerName.text = "Iskeiro Wins";
-                    GameTimer.finished = true;
-                    IskeiroHealth.currentHealth = 100;
-                    DarcHealth.currentHealth = 1000;
-                    robotController.ResetTransform();
+                    GameFinished = true;
+
                 }
                 else if (10 * IskeiroHealth.currentHealth < DarcHealth.currentHealth)
                 {
-                    DarcWins++;
-                    GameTimer.finished = true;
+                    StartCoroutine(ResetGame(false, true));
                     WinnerName.text = "Darc  Wins";
-                    GameTimer.finished = true;
-                    IskeiroHealth.currentHealth = 100;
-                    DarcHealth.currentHealth = 1000;
-                    robotController.ResetTransform();
+                    GameFinished = true;
+
+
                 }
                 else
                 {
+                    StartCoroutine(ResetGame(false, false));
                     WinnerName.text = "Draw";
-                    GameTimer.finished = true;
-                    IskeiroHealth.currentHealth = 100;
-                    DarcHealth.currentHealth = 1000;
-                    robotController.ResetTransform();
                 }
 
             }
@@ -245,23 +260,19 @@ public class GameManager : MonoBehaviour {
             {
                 if (IskeiroHealth.currentHealth <= 0)
                 {
-                    DarcWins++;
-                    audioWellDone.Play();
-                    GameTimer.finished = true;
+                    StartCoroutine(ResetGame(false, true));
                     WinnerName.text = "Darc  Wins";
-                    IskeiroHealth.currentHealth = 100;
-                    DarcHealth.currentHealth = 1000;
-                    robotController.ResetTransform();
+                    audioWellDone.Play();
+                    GameFinished = true;
+
                 }
                 else if (DarcHealth.currentHealth <= 0)
                 {
-                    IskeiroWins++;
+                    StartCoroutine(ResetGame(true, false));
+                    WinnerName.text = "Iskeiro  Wins";
                     audioWellDone.Play();
-                    GameTimer.finished = true;
-                    WinnerName.text = "Iskeiro Wins";
-                    IskeiroHealth.currentHealth = 100;
-                    DarcHealth.currentHealth = 1000;
-                    robotController.ResetTransform();
+                    GameFinished = true;
+
                 }
                 else // Não acabou
                 {
