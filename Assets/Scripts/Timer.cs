@@ -12,9 +12,9 @@ public class Timer : MonoBehaviour {
     public float maxTime = 6;
     private float startTime;
 	void Start () {
-        startTime = Time.time;
+        startTime = Time.fixedTime/3.0f;
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 
@@ -22,7 +22,7 @@ public class Timer : MonoBehaviour {
         {
             return;
         }
-        float t = maxTime -(Time.time - startTime);
+        float t = maxTime -(Time.fixedTime/3.0f - startTime);
 
         string minutes = ((int)t / 60).ToString();
         string seconds = (t % 60).ToString("f0");
