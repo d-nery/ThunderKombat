@@ -477,8 +477,13 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: Alumi
+    second: {fileID: 2100000, guid: 4640c724311a84444a6b1d268cb4d470, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: Arma
-    second: {fileID: 2100000, guid: bedcbcc4d577778478a5f01fe1415af1, type: 2}
+    second: {fileID: 2100000, guid: 4640c724311a84444a6b1d268cb4d470, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

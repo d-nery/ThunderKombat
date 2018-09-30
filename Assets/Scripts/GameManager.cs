@@ -41,13 +41,13 @@ public class GameManager : MonoBehaviour {
         robotControllerIskeiro = Iskeiro.GetComponent<RobotController>();
         robotControllerDarc = darc.GetComponent<RobotController>();
 
-       
+
 
 
 
     }
-	
-	// Update is called once per frame
+
+    // Update is called once per frame
 
     IEnumerator ResetGame(bool IskeiroVictory, bool DarcVictory)
     {
@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour {
         if (DarcVictory)
             DarcWins++;
 
- 
+
         IskeiroHealth.currentHealth = IskeiroHealth.startingHealth;
         DarcHealth.currentHealth = DarcHealth.startingHealth;
 
@@ -89,6 +89,7 @@ public class GameManager : MonoBehaviour {
         }
 
 
+    void Update () {
         if (IskeiroWins == 0 && DarcWins == 0) // Primeira vitoria de cada um
         {
             if (GameTimer.finished)
@@ -187,20 +188,20 @@ public class GameManager : MonoBehaviour {
                     StartCoroutine(ResetGame(true, false));
                     WinnerName.text = "Darc  K.O";
 
-                    
+
                 }
                 else if (10 * IskeiroHealth.currentHealth < DarcHealth.currentHealth)
                 {
                     StartCoroutine(ResetGame(false, true));
                     WinnerName.text = "Darc  Wins";
-                    
+
                 }
                 else
                 {
                     StartCoroutine(ResetGame(false, false));
                     WinnerName.text = "Draw";
 
-                    
+
                 }
 
             }
@@ -212,7 +213,7 @@ public class GameManager : MonoBehaviour {
                     WinnerName.text = "Darc  Wins";
                     audioImpressive.Play();
 
-                    
+
                 }
                 else if (DarcHealth.currentHealth <= 0)
                 {
@@ -238,7 +239,7 @@ public class GameManager : MonoBehaviour {
                     StartCoroutine(ResetGame(true, false));
                     WinnerName.text = "Iskeiro Wins";
                     GameFinished = true;
-       
+
                 }
                 else if (10 * IskeiroHealth.currentHealth < DarcHealth.currentHealth)
                 {
@@ -251,7 +252,7 @@ public class GameManager : MonoBehaviour {
                 else
                 {
                     StartCoroutine(ResetGame(false, false));
-                    WinnerName.text = "Draw";                                 
+                    WinnerName.text = "Draw";
                 }
 
             }
