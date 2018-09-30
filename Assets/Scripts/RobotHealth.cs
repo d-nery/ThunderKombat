@@ -9,35 +9,28 @@ public class RobotHealth : MonoBehaviour
 	public int bulletDamage = 10;
 	public int activeWeaponDamage = 20;
 	public int wedgeDamage = 15;
-    public AudioSource wedgeSound;
-    public AudioSource weaponSound;
-    public AudioSource fireSound;
     public Slider healthSlider;
+
+	private HingeJoint hjoint;
 
     void Start () {
         currentHealth = startingHealth;
-        //wedgeSound = GetComponent<AudioSource>();
-       // weaponSound = GetComponent<AudioSource>();
-        //fireSound = GetComponent<AudioSource>();
     }
 
 	public void OnCollisionEnter(Collision col) {
 		print("Collision detected: " + col.gameObject.tag);
 		if (col.gameObject.tag == "Bullet") {
 			print("Collision of a Bullet.");
-            //fireSound.Play();
-            TakeDamage(10);
-		} else if (col.gameObject.tag == "ActiveWeapon") {
-			/* TODO: Differ if the weapon is spinning */
-			print("Collision of an Active Weapon.");
-            //weaponSound.Play();
-            TakeDamage(20);
-			healthSlider.value = currentHealth;
+            TakeDamage(bulletDamage);
+
+			hjoint = col.gameObject.GetComponent<HingeJoint>();
+			if (hjoint.velocity > Mathf.Abs(500)) {
+				print("Take damage from active weapon.");
+				TakeDamage(activeWeaponDamage);
+			}
 		} else if (col.gameObject.tag == "Wedge") {
 			print("Collision of a Wedge.");
-			TakeDamage(15);
-			healthSlider.value = currentHealth;
-            //wedgeSound.Play();
+			TakeDamage(wedgeDamage);
 		}
 	}
 
@@ -45,7 +38,7 @@ public class RobotHealth : MonoBehaviour
 		print("Trigger detected: " + col.gameObject.tag);
 		if (col.gameObject.tag == "Bullet") {
 			print("Collision of a Bullet.");
-			TakeDamage(10);
+			TakeDamage(bulletDamage);
 		}
 	}
 
