@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour {
 
     RobotHealth IskeiroHealth;
     RobotHealth DarcHealth;
+    RobotController robotController;
     Text WinnerName;
     Timer GameTimer;
     public int IskeiroWins = 0;
@@ -34,10 +35,28 @@ public class GameManager : MonoBehaviour {
         audioExcellent = GetComponent<AudioSource>();
         audioImpressive = GetComponent<AudioSource>();
         audioWellDone = GetComponent<AudioSource>();
+        robotController = GetComponent<RobotController>();
 
     }
 	
 	// Update is called once per frame
+
+    void ResetGame(bool IskeiroVictory, bool DarcVictory)
+    {
+        if (IskeiroVictory)
+            IskeiroWins++;
+        if (DarcVictory)
+            DarcWins++;
+
+        
+        IskeiroHealth.currentHealth = 100;
+        DarcHealth.currentHealth = 1000;
+        GameTimer.finished = true;
+        robotController.ResetTransform();
+
+
+
+    }
 	void Update () {
 
 
@@ -48,16 +67,17 @@ public class GameManager : MonoBehaviour {
 
                 if (10 * IskeiroHealth.currentHealth > DarcHealth.currentHealth)
                 {
-                    IskeiroWins++;
+                    ResetGame(true, false);
                     WinnerName.text = "Darc  K.O";
                 }
                 else if (10 * IskeiroHealth.currentHealth < DarcHealth.currentHealth)
                 {
-                    DarcWins++;
+                    ResetGame(false, true);
                     WinnerName.text = "Iskeiro  K.O";
                 }
                 else
                 {
+                    ResetGame(false, false);
                     WinnerName.text = "Draw";
                 }
 
@@ -66,19 +86,16 @@ public class GameManager : MonoBehaviour {
             {
                 if (IskeiroHealth.currentHealth <= 0)
                 {
-                    DarcWins++;
-                    audioExcellent.Play();
-                    GameTimer.finished = true;
+                    ResetGame(false, true);
                     WinnerName.text = "Iskeiro  K.O";
+                    audioExcellent.Play();
                 }
                 else if (DarcHealth.currentHealth <= 0)
                 {
-                    IskeiroWins++;
-                    audioExcellent.Play();
-                    GameTimer.finished = true;
+                    ResetGame(true, false);
                     WinnerName.text = "Darc  K.O";
                 }
-                else
+                else // Durante o jogo
                 {
                     WinnerName.text = "";
                 }
@@ -90,65 +107,77 @@ public class GameManager : MonoBehaviour {
             if (GameTimer.finished)
             {
 
-                if (10 * IskeiroHealth.currentHealth > DarcHealth.currentHealth)
+                if (10 * IskeiroHealth.currentHealth > DarcHealth.currentHealth) //Game Finish
                 {
-                    IskeiroWins++;
-                    audioImpressive.Play();
+                    ResetGame(true, false);
+                    audioExcellent.Play();
                     WinnerName.text = "Iskeiro  Wins";
                 }
                 else if (10 * IskeiroHealth.currentHealth < DarcHealth.currentHealth)
                 {
-                    DarcWins++;
+                    ResetGame(false, true);     
                     audioImpressive.Play();
                     WinnerName.text = "Iskeiro  K.O";
+
                 }
                 else
                 {
                     WinnerName.text = "Draw";
+                    ResetGame(false, false);
                 }
 
             }
             else
             {
-                if (IskeiroHealth.currentHealth <= 0)
+                if (IskeiroHealth.currentHealth <= 0) //Iskeiro Perde
                 {
-                    DarcWins++;
-                    GameTimer.finished = true;
+                    ResetGame(false, true);
                     audioImpressive.Play();
                     WinnerName.text = "Iskeiro  K.O";
                 }
                 else if (DarcHealth.currentHealth <= 0)
                 {
-                    IskeiroWins++;
+                    ResetGame(true, false);
                     audioImpressive.Play();
-                    GameTimer.finished = true;
                     WinnerName.text = "Iskeiro  Wins";
                 }
-                else
+                else // Não acabou
                 {
                     WinnerName.text = "";
                 }
             }
         }
 
-        else if (IskeiroWins == 0 && DarcWins == 1)
+        else if (IskeiroWins == 0 && DarcWins == 1) //Continuar Usar função depois
         {
             if (GameTimer.finished)
             {
 
                 if (10 * IskeiroHealth.currentHealth > DarcHealth.currentHealth)
                 {
+                    GameTimer.finished = true;
                     IskeiroWins++;
                     WinnerName.text = "Darc  K.O";
+                    IskeiroHealth.currentHealth = 100;
+                    DarcHealth.currentHealth = 1000;
+                    robotController.ResetTransform();
                 }
                 else if (10 * IskeiroHealth.currentHealth < DarcHealth.currentHealth)
                 {
+                    GameTimer.finished = true;
                     DarcWins++;
                     WinnerName.text = "Darc  Wins";
+                    IskeiroHealth.currentHealth = 100;
+                    DarcHealth.currentHealth = 1000;
+                    robotController.ResetTransform();
                 }
                 else
                 {
+                    GameTimer.finished = true;
                     WinnerName.text = "Draw";
+                    IskeiroHealth.currentHealth = 100;
+                    DarcHealth.currentHealth = 1000;
+                    robotController.ResetTransform();
                 }
 
             }
@@ -160,6 +189,9 @@ public class GameManager : MonoBehaviour {
                     audioImpressive.Play();
                     GameTimer.finished = true;
                     WinnerName.text = "Darc  Wins";
+                    IskeiroHealth.currentHealth = 100;
+                    DarcHealth.currentHealth = 1000;
+                    robotController.ResetTransform();
                 }
                 else if (DarcHealth.currentHealth <= 0)
                 {
@@ -167,8 +199,11 @@ public class GameManager : MonoBehaviour {
                     audioImpressive.Play();
                     GameTimer.finished = true;
                     WinnerName.text = "Darc  K.O";
+                    IskeiroHealth.currentHealth = 100;
+                    DarcHealth.currentHealth = 1000;
+                    robotController.ResetTransform();
                 }
-                else
+                else // Não acabou
                 {
                     WinnerName.text = "";
                 }
@@ -183,16 +218,30 @@ public class GameManager : MonoBehaviour {
                 if (10 * IskeiroHealth.currentHealth > DarcHealth.currentHealth)
                 {
                     IskeiroWins++;
+                    GameTimer.finished = true;
                     WinnerName.text = "Iskeiro Wins";
+                    GameTimer.finished = true;
+                    IskeiroHealth.currentHealth = 100;
+                    DarcHealth.currentHealth = 1000;
+                    robotController.ResetTransform();
                 }
                 else if (10 * IskeiroHealth.currentHealth < DarcHealth.currentHealth)
                 {
                     DarcWins++;
+                    GameTimer.finished = true;
                     WinnerName.text = "Darc  Wins";
+                    GameTimer.finished = true;
+                    IskeiroHealth.currentHealth = 100;
+                    DarcHealth.currentHealth = 1000;
+                    robotController.ResetTransform();
                 }
                 else
                 {
                     WinnerName.text = "Draw";
+                    GameTimer.finished = true;
+                    IskeiroHealth.currentHealth = 100;
+                    DarcHealth.currentHealth = 1000;
+                    robotController.ResetTransform();
                 }
 
             }
@@ -204,6 +253,9 @@ public class GameManager : MonoBehaviour {
                     audioWellDone.Play();
                     GameTimer.finished = true;
                     WinnerName.text = "Darc  Wins";
+                    IskeiroHealth.currentHealth = 100;
+                    DarcHealth.currentHealth = 1000;
+                    robotController.ResetTransform();
                 }
                 else if (DarcHealth.currentHealth <= 0)
                 {
@@ -211,8 +263,11 @@ public class GameManager : MonoBehaviour {
                     audioWellDone.Play();
                     GameTimer.finished = true;
                     WinnerName.text = "Iskeiro Wins";
+                    IskeiroHealth.currentHealth = 100;
+                    DarcHealth.currentHealth = 1000;
+                    robotController.ResetTransform();
                 }
-                else
+                else // Não acabou
                 {
                     WinnerName.text = "";
                 }

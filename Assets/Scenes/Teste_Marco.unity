@@ -3517,6 +3517,11 @@ Prefab:
       propertyPath: fireSound
       value: 
       objectReference: {fileID: 416625192}
+    - target: {fileID: 114144100024923158, guid: 953d73fb6f443164fb59a1c489c62ed6,
+        type: 2}
+      propertyPath: robot
+      value: 
+      objectReference: {fileID: 416625184}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 953d73fb6f443164fb59a1c489c62ed6, type: 2}
   m_IsPrefabAsset: 0

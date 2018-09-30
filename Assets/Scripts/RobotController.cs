@@ -30,12 +30,13 @@ public class RobotController : MonoBehaviour {
         GetComponent<Rigidbody>().maxAngularVelocity = 1.5f;
     }
 
-    void ResetTransform() {
+    public void ResetTransform() {
         gameObject.transform.position = initialPosition;
         gameObject.transform.rotation = initialRotation;
         GetComponent<Rigidbody>().velocity = Vector3.zero;
         GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
     }
+
 
     // Update is called once per frame
     void FixedUpdate () {
