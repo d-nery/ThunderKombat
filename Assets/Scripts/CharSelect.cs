@@ -9,5 +9,9 @@ public class CharSelect : MonoBehaviour {
         if (Input.GetAxis("P1B") > 0) {
             SceneManager.LoadScene(0);
         }
+
+        if (Input.GetAxis("P1A") > 0) {
+            SceneManager.LoadScene(2);
+        }
     }
 }

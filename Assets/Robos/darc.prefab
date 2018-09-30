@@ -6427,8 +6427,8 @@ Rigidbody:
   m_GameObject: {fileID: 1741418144401942}
   serializedVersion: 2
   m_Mass: 700
-  m_Drag: 10
-  m_AngularDrag: 0.05
+  m_Drag: 0.2
+  m_AngularDrag: 0.15
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -6441,10 +6441,10 @@ HingeJoint:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1060531193916114}
   m_ConnectedBody: {fileID: 54887786425966424}
-  m_Anchor: {x: 1, y: -10.03, z: -0}
+  m_Anchor: {x: 1, y: -10.48, z: 0.12}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -3.931452, y: 4.6307964, z: -5.5219264}
+  m_ConnectedAnchor: {x: -3.931452, y: 4.5915384, z: -5.519275}
   m_UseSpring: 0
   m_Spring:
     spring: 0
@@ -6478,8 +6478,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 15.2795105, y: 3.8370848, z: 13.916031}
-  m_Center: {x: -0.1299591, y: 3.718164, z: 0.972641}
+  m_Size: {x: 15.2795105, y: 4.584832, z: 13.916031}
+  m_Center: {x: -0.12995878, y: 4.182507, z: 0.9726413}
 --- !u!65 &65416434134979846
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -6544,7 +6544,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3799bf7a3d1eb634983efcd8b9d6b1ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  motorForce: 5000
+  motorForce: 6000
   brakeForce: 50000
   spinFactor: 0.6
   leftWheel: {fileID: 146525810669457030}
@@ -6563,7 +6563,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b774f8e747bdc545911a1c5bd810bfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 100
+  startingHealth: 1000
   bulletDamage: 1
   activeWeaponDamage: 5
   wedgeDamage: 2
@@ -6583,7 +6583,7 @@ WheelCollider:
   m_SuspensionDistance: 0.3
   m_ForceAppPointDistance: 0
   m_Mass: 100
-  m_WheelDampingRate: 0.25
+  m_WheelDampingRate: 40
   m_ForwardFriction:
     m_ExtremumSlip: 0.4
     m_ExtremumValue: 1
@@ -6612,7 +6612,7 @@ WheelCollider:
   m_SuspensionDistance: 0.3
   m_ForceAppPointDistance: 0
   m_Mass: 100
-  m_WheelDampingRate: 0.25
+  m_WheelDampingRate: 400
   m_ForwardFriction:
     m_ExtremumSlip: 0.4
     m_ExtremumValue: 1
@@ -6641,7 +6641,7 @@ WheelCollider:
   m_SuspensionDistance: 0.3
   m_ForceAppPointDistance: 0
   m_Mass: 100
-  m_WheelDampingRate: 0.25
+  m_WheelDampingRate: 40
   m_ForwardFriction:
     m_ExtremumSlip: 0.4
     m_ExtremumValue: 1
@@ -6670,7 +6670,7 @@ WheelCollider:
   m_SuspensionDistance: 0.3
   m_ForceAppPointDistance: 0
   m_Mass: 100
-  m_WheelDampingRate: 0.25
+  m_WheelDampingRate: 400
   m_ForwardFriction:
     m_ExtremumSlip: 0.4
     m_ExtremumValue: 1
