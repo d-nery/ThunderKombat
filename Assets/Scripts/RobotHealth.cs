@@ -16,28 +16,28 @@ public class RobotHealth : MonoBehaviour
 
     void Start () {
         currentHealth = startingHealth;
-        wedgeSound = GetComponent<AudioSource>();
-        weaponSound = GetComponent<AudioSource>();
-        fireSound = GetComponent<AudioSource>();
+        //wedgeSound = GetComponent<AudioSource>();
+       // weaponSound = GetComponent<AudioSource>();
+        //fireSound = GetComponent<AudioSource>();
     }
 
 	public void OnCollisionEnter(Collision col) {
 		print("Collision detected: " + col.gameObject.tag);
 		if (col.gameObject.tag == "Bullet") {
 			print("Collision of a Bullet.");
-            fireSound.Play();
+            //fireSound.Play();
             TakeDamage(10);
 		} else if (col.gameObject.tag == "ActiveWeapon") {
 			/* TODO: Differ if the weapon is spinning */
 			print("Collision of an Active Weapon.");
-            weaponSound.Play();
+            //weaponSound.Play();
             TakeDamage(20);
 			healthSlider.value = currentHealth;
 		} else if (col.gameObject.tag == "Wedge") {
 			print("Collision of a Wedge.");
 			TakeDamage(15);
 			healthSlider.value = currentHealth;
-            wedgeSound.Play();
+            //wedgeSound.Play();
 		}
 	}
 

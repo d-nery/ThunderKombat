@@ -15,8 +15,8 @@ public class RobotController : MonoBehaviour {
     private bool shouldBlink = false;
 
     // Use this for initialization
-    private Vector3 initialPosition;
-    private Quaternion initialRotation;
+    public Vector3 initialPosition;
+    public Quaternion initialRotation;
 
     // Use this for initialization
     void Start () {
