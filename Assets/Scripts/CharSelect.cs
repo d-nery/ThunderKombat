@@ -6,16 +6,14 @@ using UnityEngine.UI;
 
 public class CharSelect : MonoBehaviour {
 
-    public AudioSource SelectAudio;
+
     void FixedUpdate () {
-        if (Input.GetAxis("P1B") > 0) {
-            SceneManager.LoadScene(0);
-            SelectAudio.Play();
+        if (Input.GetButtonDown("P1X") || Input.GetButtonDown("P2X")) {
+            SceneManager.LoadScene(0);        
         }
 
-        if (Input.GetAxis("P1A") > 0) {
+        if (Input.GetButtonDown("P1A") || Input.GetButtonDown("P2A") || Input.GetButtonDown("P1B") || Input.GetButtonDown("P2B")) {
             SceneManager.LoadScene(2);
-            SelectAudio.Play();
         }
     }
 }

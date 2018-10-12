@@ -55,8 +55,9 @@ public class RobotController : MonoBehaviour {
         float v = Input.GetAxis("P" + playerNumber + "Yaxis") * motorForce;
         float h = Input.GetAxis("P" + playerNumber + "Xaxis") * motorForce;
 
-        if (Input.GetKeyDown("joystick " + playerNumber + " button 2")) {
+        if (Input.GetButtonDown("P" + playerNumber + "X")) {
             flip.Pressing(true);
+            print("oi");
         } else {
             flip.Pressing(false);
         }
